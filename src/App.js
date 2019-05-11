@@ -1,7 +1,20 @@
 import React from 'react';
 import connect from '@vkontakte/vkui-connect';
-import { View, Panel, PanelHeader, Group, List, Cell, PullToRefresh } from '@vkontakte/vkui';
+import { View, Panel, PanelHeader, Group, List, Cell, PullToRefresh, Gallery } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
+
+function Post(props) {
+	let post = props.post;
+	return (
+		<Cell>{post.text}</Cell>
+	);
+}
+
+/*<Gallery slideWidth="100%" bullets="dark">
+											{post.attachments.map((attachment, j) => {
+												return <img src="https://media.licdn.com/dms/image/C560BAQHQAKQeZ_nTOw/company-logo_200_200/0?e=2159024400&v=beta&t=woTFVXrEZDfdZSrYX2YstCLWH-Ihq9k_VSurWCJ0i20"/>
+											})}
+										</Gallery>*/
 
 class App extends React.Component {
 	constructor(props) {
@@ -32,7 +45,7 @@ class App extends React.Component {
 
 				case "VKWebAppCallAPIMethodResult":
 					let items = e.detail.data.response.items;
-					items.filter(item => item.type === "post" && 'text' in item);
+					items.filter(item => item.type === "post");
 					this.setState({ posts: items })
 					break;
 
@@ -52,7 +65,9 @@ class App extends React.Component {
 						<Group>
 							<List>
 								<Cell>{this.state.access_token}</Cell>
-								{this.state.posts.map((a, i) => <Cell multiline>{JSON.stringify(a)}</Cell>)}
+								{this.state.posts.map((post, i) => {
+									return <Post post={post}/>
+								})}
 							</List>
 						</Group>
 					</PullToRefresh>

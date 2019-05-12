@@ -72,7 +72,9 @@ function LikesRepostsViews(props) {
 		<Div style={{display: 'flex'}}>
 			<Cell before={props.post.likes.user_likes == 1 ? <Icon24Like/> : <Icon24LikeOutline/>}
 			      onClick={like(props.post.post_id)}> {props.post.likes.count} </Cell>
-			<Cell before={<Icon24ShareOutline/>}>{props.post.reposts.count}</Cell>
+			<Cell before={props.post.likes.user_reposted == 1 ? <Icon24Share/> : <Icon24ShareOutline/>}>
+				{props.post.reposts.count}</Cell>
+			<Cell before={<Icon24View/>}>{props.post.views.count}</Cell>
 		</Div>
 	);
 }

@@ -41,20 +41,13 @@ let like = (id) => {
 		connect.send("VKWebAppCallAPIMethod", {"method": "likes.add", "request_id": "ignore", "params": {"v":"5.95", "item_id": id, "access_token": access_token}});
 	}
 }
-	
-function prepare(text) {
-	let a = text.replace('\n', '<br>');
-	//a = a.replace(urlRegexp, (url) => {return "<a target='_blank' href='" + url + "'>" + url + "</a>"});
-	//a = a.replace(tagRegexp, (tag) => {return "<a target='_blank' href='https://vk.com/feed?section=search&q="+tag+"'>"+tag+"</a>"});
-	return {__html: a};
-}
 
 function Text(props) {
 	if (!props.text || props.text === "")
 		return null;
 
 	return (
-		<Cell multiline><span dangerouslySetInnerHTML={prepare(props.text)}></span></Cell>
+		<Cell multiline><text style={{ "white-space": "pre-wrap" }}>{`${props.text}`}</text></Cell>
 	);
 }
 
@@ -80,7 +73,6 @@ function LikesRepostsViews(props) {
 			<Cell before={props.post.likes.user_likes == 1 ? <Icon24Like/> : <Icon24LikeOutline/>}
 			      onClick={like(props.post.post_id)}> {props.post.likes.count} </Cell>
 			<Cell before={<Icon24ShareOutline/>}>{props.post.reposts.count}</Cell>
-			<Cell before={<Icon24View/>}>{props.post.views.count}</Cell>
 		</Div>
 	);
 }
